@@ -1,0 +1,80 @@
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@300;400;500;600;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Brand tokens */
+    --cream: #f5f0e0;
+    --emerald: #064e3b;
+    --emerald-soft: #0d7a5f;
+    --gold: #c9a84c;
+    --risk-high: #b91c1c;
+    --risk-med: #c9a84c;
+    --risk-low: #0d7a5f;
+
+    /* Semantic mapping */
+    --background: #f5f0e0;
+    --foreground: #064e3b;
+    --card: #faf6ea;
+    --card-foreground: #064e3b;
+    --popover: #faf6ea;
+    --popover-foreground: #064e3b;
+    --primary: #064e3b;
+    --primary-foreground: #f5f0e0;
+    --secondary: #0d7a5f;
+    --secondary-foreground: #f5f0e0;
+    --muted: rgba(6, 78, 59, 0.05);
+    --muted-foreground: rgba(6, 78, 59, 0.6);
+    --accent: #c9a84c;
+    --accent-foreground: #064e3b;
+    --destructive: #b91c1c;
+    --destructive-foreground: #f5f0e0;
+    --border: rgba(6, 78, 59, 0.12);
+    --input: rgba(6, 78, 59, 0.12);
+    --ring: rgba(6, 78, 59, 0.3);
+    --radius: 0.25rem;
+  }
+
+  * {
+    border-color: rgba(6, 78, 59, 0.12);
+  }
+
+  body {
+    background-color: #f5f0e0;
+    color: #064e3b;
+    font-family: 'Work Sans', ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: rgba(201, 168, 76, 0.35);
+    color: #064e3b;
+  }
+}
+
+/* Editorial helper */
+.label-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(6, 78, 59, 0.45);
+}
+
+/* Print: clean PDF for lawyer report */
+@media print {
+  nav, header, aside, .print\:hidden { display: none !important; }
+  main { padding: 0 !important; }
+  body { background: white !important; }
+}
+
+@keyframes prepd-fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+  animation: prepd-fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
