@@ -1,37 +1,29 @@
+<div align="center">
+
 # Prepd
+
+**AI-assisted deposition and testimony preparation**
+
+[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Supabase](https://img.shields.io/badge/Supabase-Postgres_%2B_Auth-3FCF8E?logo=supabase&logoColor=white)](https://supabase.com/)
+[![Claude](https://img.shields.io/badge/Anthropic-Claude-D97757?logo=anthropic&logoColor=white)](https://www.anthropic.com/)
+
+[Demo Video](https://github.com/user-attachments/assets/b8179913-1d07-4671-9723-b0e625ce8a04) · [Architecture](#-architecture) · [Quick Start](#-quick-start) · [Data Model](#-data-model) · [Known Issues](#-known-issues)
+
+</div>
 
 https://github.com/user-attachments/assets/b8179913-1d07-4671-9723-b0e625ce8a04
 
-**AI-assisted deposition and testimony preparation.** Prepd lets a lawyer turn a case file into targeted practice questions, has the client answer them by voice or text, and returns a structured readiness report that flags contradictions, weak answers and conflicts with the documents before opposing counsel finds them.
-
-Built for LexidenHack.
-
-![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?logo=tailwindcss&logoColor=white)
-![Supabase](https://img.shields.io/badge/Supabase-Postgres_+_Auth_+_Storage-3FCF8E?logo=supabase&logoColor=white)
-![Deno](https://img.shields.io/badge/Deno-Edge_Functions-000000?logo=deno&logoColor=white)
-
 ---
 
-## Contents
+## 🧠 Overview
 
-- [Why it exists](#why-it-exists)
-- [Features](#features)
-- [Architecture](#architecture)
-- [Getting started](#getting-started)
-- [Using the demo](#using-the-demo)
-- [How the analysis works](#how-the-analysis-works)
-- [Data model](#data-model)
-- [Access control](#access-control)
-- [Edge function reference](#edge-function-reference)
-- [Project structure](#project-structure)
-- [Limitations](#limitations)
+Prepd lets a lawyer turn a case file into targeted practice questions, has the client answer them by voice or text, and returns a structured readiness report that flags contradictions, weak answers and conflicts with the documents before opposing counsel finds them.
 
----
+> Find the contradiction before opposing counsel does.
 
-## Why it exists
+### ✨ Why Prepd?
 
 Preparing a client for a deposition is slow, manual work. A lawyer reads the file, writes questions, runs mock sessions in person and takes notes on where the client's account drifts. Most clients get one or two rehearsals, and the problems that matter, such as a date that contradicts an email or an answer that volunteers too much, surface late.
 
@@ -44,18 +36,24 @@ Prepd moves the repetition out of the lawyer's calendar:
 | Notes depend on what the lawyer catches live | Every answer is stored and analysed against the others and the documents |
 | Findings live in a legal pad | A structured report with risk levels, exportable as PDF |
 
-## Features
+---
 
-- **Two separate experiences.** Lawyers manage cases, documents, clients and reports. Clients see only their own cases and practice sessions. Routes are role-protected in the app and rows are protected in the database.
-- **Case-grounded question generation.** Claude reads the case summary, key facts and extracted document text, then writes questions phrased as opposing counsel would ask them, ordered from easier to harder.
-- **Seven question-set types.** Background and timeline, relationships, credibility challenges, event-specific deep dive, document confrontation, hostile cross-examination and procedural familiarity. A client's first session is always an essential-foundation set.
-- **Voice or text answers.** Answers are recorded in the browser and transcribed with ElevenLabs speech-to-text, or typed directly. Each answer is saved with its type.
-- **Structured readiness report.** A consistency score from 1 to 10, strong points, weak points with risk levels, contradictions between answers, conflicts with documents, volunteered information and a recommended next set.
-- **PDF export.** Reports download as a branded PDF produced by a dependency-free generator written for this project.
-- **In-browser document parsing.** PDF, DOCX, TXT and Markdown files are parsed client-side before upload to private storage.
-- **Token-based client invites.** A lawyer invites a client by email; the client signs up through a tokenised link and is attached to the case.
+## 🚀 Features
 
-## Architecture
+| Feature | Description |
+|---|---|
+| **Two separate experiences** | Lawyers manage cases, documents, clients and reports. Clients see only their own cases and practice sessions. Routes are role-protected in the app and rows are protected in the database. |
+| **Case-grounded question generation** | Claude reads the case summary, key facts and extracted document text, then writes questions phrased as opposing counsel would ask them, ordered from easier to harder. |
+| **Seven question-set types** | Background and timeline, relationships, credibility challenges, event-specific deep dive, document confrontation, hostile cross-examination and procedural familiarity. A client's first session is always an essential-foundation set. |
+| **Voice or text answers** | Answers are recorded in the browser and transcribed with ElevenLabs speech-to-text, or typed directly. Each answer is saved with its type. |
+| **Structured readiness report** | A consistency score from 1 to 10, strong points, weak points with risk levels, contradictions between answers, conflicts with documents, volunteered information and a recommended next set. |
+| **PDF export** | Reports download as a branded PDF produced by a dependency-free generator written for this project. |
+| **In-browser document parsing** | PDF, DOCX, TXT and Markdown files are parsed client-side before upload to private storage. |
+| **Token-based client invites** | A lawyer invites a client by email; the client signs up through a tokenised link and is attached to the case. |
+
+---
+
+## 📐 Architecture
 
 ```mermaid
 flowchart LR
@@ -97,16 +95,46 @@ flowchart LR
 
 The frontend talks to Supabase directly through the JavaScript SDK, with row-level security deciding what each user can read or write. All calls to Claude go through edge functions, so the Anthropic key never reaches the browser. The report is written by the `analyse-session` function using the service role, because clients are not permitted to insert or read reports.
 
-| Layer | Technology |
-|---|---|
-| Frontend | React 18, TypeScript, Vite, React Router |
-| UI | Tailwind CSS, Radix UI primitives, lucide-react |
-| Backend | Supabase: Postgres, Auth, Storage, Edge Functions on Deno |
-| Language model | Anthropic Claude via the Messages API |
-| Speech-to-text | ElevenLabs Scribe |
-| Document parsing | pdf.js, mammoth |
+---
 
-## Getting started
+## 🧰 Tech Stack
+
+<div align="center">
+
+### Frontend
+
+![React](https://img.shields.io/badge/React-18-20232A?style=for-the-badge&logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-5-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Radix UI](https://img.shields.io/badge/Radix_UI-161618?style=for-the-badge&logo=radixui&logoColor=white)
+
+### Backend
+
+![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-RLS-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![Deno](https://img.shields.io/badge/Deno-Edge_Functions-000000?style=for-the-badge&logo=deno&logoColor=white)
+
+### AI & APIs
+
+![Claude](https://img.shields.io/badge/Anthropic-Claude-D97757?style=for-the-badge&logo=anthropic&logoColor=white)
+![ElevenLabs](https://img.shields.io/badge/ElevenLabs-Scribe-000000?style=for-the-badge&logo=elevenlabs&logoColor=white)
+
+### Document Processing
+
+![pdf.js](https://img.shields.io/badge/pdf.js-EC1C24?style=for-the-badge)
+![mammoth](https://img.shields.io/badge/mammoth-DOCX-2B579A?style=for-the-badge)
+
+</div>
+
+---
+
+## 🏃 Quick Start
+
+```bash
+git clone https://github.com/summitkabir6/Prepd.git
+cd Prepd
+```
 
 ### Prerequisites
 
@@ -168,7 +196,9 @@ New signups default to the `client` role, so the first lawyer is promoted by han
 UPDATE public.users SET role = 'lawyer' WHERE email = 'lawyer@example.com';
 ```
 
-## Using the demo
+---
+
+## 🎯 Usage
 
 1. **Sign in as the lawyer** and create a case with a name, type, summary and key facts.
 2. **Upload documents.** Text is extracted in the browser and stored alongside the file.
@@ -191,7 +221,9 @@ UPDATE public.users SET role = 'lawyer' WHERE email = 'lawyer@example.com';
 | `/prepare/session/:questionSetId` | Client | Practice session |
 | `/prepare/complete` | Client | Session complete |
 
-## How the analysis works
+---
+
+## 🔬 How the Analysis Works
 
 **1. Question generation.** `generate-questions` receives the case summary, key facts, concatenated document text, the client's name and the set type. The model is instructed to return a bare JSON array of questions that are specific to the case, grounded in the supplied facts and ordered by difficulty. The response is stripped of any code fences, parsed and validated as an array before it is stored.
 
@@ -221,7 +253,9 @@ The first pass is prompted to be strict: a score of 8 or above should be rare, a
 }
 ```
 
-## Data model
+---
+
+## 🗄 Data Model
 
 ```mermaid
 erDiagram
@@ -278,7 +312,9 @@ erDiagram
     }
 ```
 
-## Access control
+---
+
+## 🔐 Access Control
 
 Row-level security is enabled on every table. The intent of the policies:
 
@@ -294,7 +330,9 @@ Row-level security is enabled on every table. The intent of the policies:
 
 Policies that reference each other across `cases` and `case_clients` caused infinite recursion in the original schema. `fix-rls-recursion.sql` resolves this with `SECURITY DEFINER` helper functions (`is_case_lawyer`, `is_case_client`, `is_qs_case_lawyer`) that perform the membership check outside the policy chain.
 
-## Edge function reference
+---
+
+## 📡 Edge Function Reference
 
 All three functions accept `POST` with a JSON body and are invoked through `supabase.functions.invoke`.
 
@@ -306,7 +344,9 @@ All three functions accept `POST` with a JSON body and are invoked through `supa
 
 `session-feedback` returns two to three sentences of coaching on a single answer. It is deployed and has a client helper in `src/lib/claude.ts`, but is not yet wired into the session screen.
 
-## Project structure
+---
+
+## 📁 Project Structure
 
 ```
 prepd/
@@ -342,7 +382,9 @@ prepd/
     └── design-brief.md        Product and interface brief
 ```
 
-## Limitations
+---
+
+## 🐛 Known Issues
 
 Prepd is a hackathon prototype. It is not legal advice and has not been reviewed for use with real client matters.
 
@@ -353,3 +395,17 @@ Prepd is a hackathon prototype. It is not legal advice and has not been reviewed
 - **Document text is sent whole.** All extracted text is concatenated into the prompt with no chunking or retrieval, so very large case files will exceed the model's context window.
 - **Model output is not verified.** Reports can contain errors or miss issues. They are a starting point for a lawyer's judgement, not a substitute for it.
 - **No automated tests.**
+
+---
+
+## 📧 Contact
+
+Summit Kabir · [@summitkabir6](https://github.com/summitkabir6)
+
+Project link: [github.com/summitkabir6/Prepd](https://github.com/summitkabir6/Prepd)
+
+---
+
+<div align="center">
+  <sub>Built for LexidenHack</sub>
+</div>
